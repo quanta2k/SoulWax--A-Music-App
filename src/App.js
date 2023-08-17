@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { LoginPage } from './pages/LoginPage';
+import { SearchPage } from './pages/SearchPage';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme=createTheme({
+  palette:{
+    mode:'dark',
+  },
+})
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const handleLogin = () => {
+        setLoggedIn(true);
+    };
+
+    const handleLogout = () => {
+        setLoggedIn(false);
+    };
+
+    return (
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline/>
+        <div>
+            {loggedIn ? (
+                <SearchPage onLogout={handleLogout} />
+            ) : (
+                <LoginPage onLogin={handleLogin} />
+            )}
+        </div>
+      </ThemeProvider>  
+    );
 }
 
 export default App;
